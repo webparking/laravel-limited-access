@@ -40,7 +40,7 @@ class ServiceProvider extends LaravelServiceProvider
 
         $this->publishes([
             __DIR__ . '/../assets' => public_path('vendor/limited-access'),
-        ], 'public');
+        ], 'assets');
     }
 
     private function registerViews(): void

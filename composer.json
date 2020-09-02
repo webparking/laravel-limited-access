@@ -2,7 +2,7 @@
     "name": "webparking/laravel-limited-access",
     "description": "Limited access for Laravel",
     "version": "0.1.0",
-    "license": "proprietary",
+    "license": "MIT",
     "authors": [
         {
             "name": "Dion Gerrese",
@@ -27,13 +27,15 @@
         }
     },
     "require": {
-        "php": "^7.4"
+        "php": "^7.3",
+        "laravel/framework": "^7"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.12.29",
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpunit/phpunit": "^9.2",
-        "laravel/framework": "^7.16"
+        "orchestra/testbench": "^5.5",
+        "roave/security-advisories": "dev-master"
     },
     "scripts": {
         "phpstan": "vendor/bin/phpstan analyse --level=max --configuration=phpstan.neon --no-progress --ansi src",
@@ -44,5 +46,7 @@
             "composer php-cs-fixer",
             "composer phpunit"
         ]
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
