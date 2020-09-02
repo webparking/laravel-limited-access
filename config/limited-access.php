@@ -10,7 +10,7 @@ return [
     | These codes will provide access to the application.
     |
     */
-    'codes' => env('LIMITED_ACCESS_CODES'),
+    'codes' => env('LIMITED_ACCESS_CODES', ''),
 
     /*
     |--------------------------------------------------------------------------

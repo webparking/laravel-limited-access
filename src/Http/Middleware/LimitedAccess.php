@@ -66,9 +66,7 @@ class LimitedAccess
         if (config('limited-access.enabled', false)) {
             $codes = explode(',', config('limited-access.codes', ''));
 
-            return \count(
-                array_filter($codes)
-            ) > 0;
+            return \count(array_filter($codes)) > 0;
         }
 
         return true;
