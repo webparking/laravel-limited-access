@@ -31,14 +31,14 @@
         "laravel/framework": "^7"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.29",
         "friendsofphp/php-cs-fixer": "^2.16",
         "phpunit/phpunit": "^9.2",
         "orchestra/testbench": "^5.5",
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "nunomaduro/larastan": "^0.6.3"
     },
     "scripts": {
-        "phpstan": "vendor/bin/phpstan analyse --level=max --configuration=phpstan.neon --no-progress --ansi src",
+        "phpstan": "vendor/bin/phpstan analyze",
         "php-cs-fixer": "vendor/bin/php-cs-fixer fix --config=.php_cs .",
         "phpunit": "vendor/bin/phpunit",
         "test": [
