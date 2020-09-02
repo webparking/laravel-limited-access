@@ -15,8 +15,28 @@ Add this package to composer.
 composer require webparking/laravel-limited-access
 ```
 
-### optional steps
-Publish the config
+### Optional steps
+
+Publish config:
+
+```shell script
+php artisan vendor:publish --provider="Webparking\LimitedAccess\ServiceProvider" --tag="config"
+```
+
+Publish assets:
+
+```shell script
+php artisan vendor:publish --provider="Webparking\LimitedAccess\ServiceProvider" --tag="assets"
+```
+
+Publish translations:
+
+```shell script
+php artisan vendor:publish --provider="Webparking\LimitedAccess\ServiceProvider" --tag="lang"
+```
+
+Or just publish all the things:
+
 ```shell script
 php artisan vendor:publish --provider="Webparking\LimitedAccess\ServiceProvider"
 ```
@@ -31,6 +51,34 @@ To add access codes add the following key to your .env file and specify your acc
 ```dotenv
 LIMITED_ACCESS_CODES=comma,separated,access,codes
 ```
+
+## Blocking/Ignoring IP addresses
+
+In `config/limited-access` you can add single IP addresses or IP address ranges in CIDR format.
+
+Example:
+
+```php
+return [
+    'block_ips' => [
+        '192.168.1.0/24',
+        '66.66.66.66', // 66.66.66.66/32 is equivalent
+        '2000:ffff::1',
+        '2000:ffff/64',
+    ],
+
+    'ignore_ips' => [
+        '11.22.33.44',
+        '10.0.0.0/8',
+        '127.0.0.1',
+        '::1',
+    ],
+];
+```
+
+Blocked IPs take priority over ignored IPs, so adding the same address or range to both arrays will cause the given IP to be blocked.
+
+You can leave both of these arrays empty if you wish for everyone to be prompted for a password.
 
 ## Licence and Postcardware
 This software is open source and licensed under the [MIT license](LICENSE.md).
