@@ -1,0 +1,203 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:700);
+
+*, *:before, *:after {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background: #1790BA linear-gradient(-45deg, #FF8568, #F8384E, #3791BA, #35CB72);
+    background-size: 400% 400%;
+    font-family: 'Raleway', sans-serif;
+    height: 100%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0 50%
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0 50%
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0 50%
+    }
+}
+
+.text-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.title {
+    font-size: 6em;
+    font-weight: 700;
+    color: white;
+}
+
+.subtitle {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: white;
+}
+
+form {
+    margin-top: 40px;
+}
+
+input {
+    font-family: 'Raleway', sans-serif;
+    border: none;
+    border-radius: 3px;
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: 2px;
+    width: 200px;
+    display: inline-block;
+    padding: 0 1px;
+    height: 45px;
+    line-height: 45px;
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+button {
+    color: white;
+    background: #38D56D;
+    font-family: 'Raleway', sans-serif;
+    text-align: center;
+    border: 0;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 0;
+    width: 90px;
+    height: 45px;
+    line-height: 45px;
+    font-size: 22px;
+    margin: 0 0 10px 5px;
+    font-weight: normal;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+button:hover,
+button:active,
+button:focus {
+    background: #28bd5a;
+    outline: none;
+    cursor: pointer;
+}
+
+.error {
+    background: #fdced3;
+}
+
+.contact {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    left: 0;
+    right: 0;
+    line-height: 40px;
+    font-size: 14px;
+    color: white;
+}
+
+.contact a {
+    color: white;
+    text-decoration: none;
+    transition: all 0.5s ease;
+}
+
+.contact a:hover,
+.contact a:focus,
+.contact a:active {
+    color: #444;
+    cursor: pointer;
+}
+
+.contact div {
+    line-height: 15px;
+    font-size: 0.8em;
+    opacity: 0.8;
+    margin-bottom: 25px;
+}
+
+.contact div span {
+    opacity: 0.6;
+}
+
+@media only screen and (max-width: 900px) {
+    .text-wrapper {
+        padding: 0 10px;
+    }
+
+    .title {
+        font-size: 4em;
+    }
+
+    .subtitle {
+        font-size: 2.5em;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .title {
+        font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-size: 1.5em;
+    }
+
+    input,
+    button {
+        font-size: 1em;
+        height: 40px;
+        line-height: 40px;
+    }
+
+    input {
+        width: 130px;
+    }
+
+    button {
+        width: 70px;
+    }
+}
