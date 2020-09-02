@@ -13,7 +13,8 @@ class LimitedAccessTest extends TestCase
         $originalCodes = config('limited-access.codes');
         config()->set('limited-access.codes', '');
 
-        $this->get('/secret-stuff')
+        $this
+            ->get('/secret-stuff')
             ->assertStatus(500);
 
         config()->set('limited-access.codes', $originalCodes);
@@ -39,9 +40,10 @@ class LimitedAccessTest extends TestCase
     {
         $this->serverVariables['REMOTE_ADDR'] = $ip;
 
-        $this->post('/limited-access-login', [
-            'code' => 'letyoudown',
-        ])
+        $this
+            ->post('/limited-access-login', [
+                'code' => 'letyoudown',
+            ])
             ->assertSessionMissing('limited-access-granted');
     }
 
@@ -54,9 +56,10 @@ class LimitedAccessTest extends TestCase
 
         session()->put('url.intended', '/secret-stuff');
 
-        $this->post('/limited-access-login', [
-            'code' => 'never',
-        ])
+        $this
+            ->post('/limited-access-login', [
+                'code' => 'never',
+            ])
             ->assertSessionHas('limited-access-granted')
             ->assertRedirect('/secret-stuff');
     }
@@ -68,9 +71,10 @@ class LimitedAccessTest extends TestCase
     {
         $this->serverVariables['REMOTE_ADDR'] = $ip;
 
-        $this->get('/secret-stuff', [
-            'code' => 'never',
-        ])
+        $this
+            ->get('/secret-stuff', [
+                'code' => 'never',
+            ])
             ->assertSessionMissing('limited-access-granted')
             ->assertSee('This is very secret!');
     }
@@ -82,9 +86,27 @@ class LimitedAccessTest extends TestCase
     {
         $this->serverVariables['REMOTE_ADDR'] = $ip;
 
-        $this->post('/limited-access-login', [
-            'code' => 'gonna',
-        ])
+        $this
+            ->post('/limited-access-login', [
+                'code' => 'gonna',
+            ])
+            ->assertSessionMissing('limited-access-granted');
+    }
+
+    public function testBlockedOverridesIgnore(): void
+    {
+        $cidr = '192.168.1.0/24';
+        $ip = '192.168.1.25';
+
+        config()->set('limited-access.block_ips', [$cidr]);
+        config()->set('limited-access.ignore_ips', [$cidr]);
+
+        $this->serverVariables['REMOTE_ADDR'] = $ip;
+
+        $this
+            ->post('/limited-access-login', [
+                'code' => 'give',
+            ])
             ->assertSessionMissing('limited-access-granted');
     }
 
