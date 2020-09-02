@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Webparking\LimitedAccess\Http\Middleware;
 
 use Closure;
@@ -7,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Routing\Route;
-use Illuminate\Support\Facades\Session;
 use Webparking\LimitedAccess\Exceptions\CodesNotSetException;
 use Webparking\LimitedAccess\Ip\IpAddressChecker;
 
@@ -42,11 +43,11 @@ class LimitedAccess
             return $next($request);
         }
 
-        if ($this->ipAddressChecker->isBlocked($request)) {
+        if ($this->ipAddressChecker->isBlocked((string) $request->ip())) {
             return $this->responseFactory->view('LimitedAccess::login');
         }
 
-        if ($this->ipAddressChecker->isIgnored($request)) {
+        if ($this->ipAddressChecker->isIgnored((string) $request->ip())) {
             return $next($request);
         }
 
@@ -62,10 +63,12 @@ class LimitedAccess
 
     private function areCodesSet(): bool
     {
-        if (config('limited-access.enabled')) {
+        if (config('limited-access.enabled', false)) {
             $codes = explode(',', config('limited-access.codes', ''));
 
-            return count($codes) > 0;
+            return \count(
+                array_filter($codes)
+            ) > 0;
         }
 
         return true;

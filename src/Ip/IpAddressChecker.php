@@ -91,10 +91,16 @@ class IpAddressChecker
             return false;
         }
 
+        /*
+         * Taken from symfony/http-foundation
+         *
+         * @link https://github.com/symfony/http-foundation/blob/master/IpUtils.php#L142
+         */
         for ($i = 1, $ceil = ceil($netmask / 16); $i <= $ceil; ++$i) {
-            $left = min($netmask - 16 * ($i - 1), 16);
+            $left = $netmask - 16 * ($i - 1);
+            $left = ($left <= 16) ? $left : 16;
             $mask = ~(0xffff >> $left) & 0xffff;
-            if ($addressBytes[$i] & $mask !== $requestBytes[$i] & $mask) {
+            if (($addressBytes[$i] & $mask) !== ($requestBytes[$i] & $mask)) {
                 return false;
             }
         }

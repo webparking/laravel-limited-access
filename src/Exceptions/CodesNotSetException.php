@@ -12,5 +12,4 @@ class CodesNotSetException extends \RuntimeException
     {
         parent::__construct('You must set at least 1 code in limited-access.codes', $code, $previous);
     }
-
 }
