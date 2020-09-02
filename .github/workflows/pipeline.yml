@@ -3,7 +3,7 @@ name: Tests
 on:
   push:
     branches:
-      - mater
+      - master
   pull_request:
     branches: 
       - '*'
@@ -36,7 +36,7 @@ jobs:
       run: composer phpstan
     
     - name: Run PHP CS Fixer
-      run: composer php-cs-fixer -- --dry-run --stop-on-voilation
+      run: composer php-cs-fixer -- --dry-run --stop-on-violation
     
     - name: Run tests
       run: composer phpunit

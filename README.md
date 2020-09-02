@@ -2,6 +2,8 @@
   Laravel limited access
 </h1>
 
+![Tests](https://github.com/webparking/laravel-limited-access/workflows/Tests/badge.svg)
+
 This package is meant to provide an easy limited access layer to your application.
 
 With this package you can specify codes to provide access to your application, block ips entirely or whitelist ips.
