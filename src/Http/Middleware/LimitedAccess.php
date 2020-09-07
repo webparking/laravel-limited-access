@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\ResponseFactory;
 use Illuminate\Routing\Route;
+use Webparking\LimitedAccess\Codes;
 use Webparking\LimitedAccess\Exceptions\CodesNotSetException;
 use Webparking\LimitedAccess\Ip\IpAddressChecker;
 
@@ -24,10 +25,24 @@ class LimitedAccess
      */
     private $responseFactory;
 
-    public function __construct(IpAddressChecker $ipAddressChecker, ResponseFactory $responseFactory)
+    /**
+     * @var Codes
+     */
+    private $codes;
+
+    /**
+     * @var string[]
+     */
+    private $except = [
+        'LimitedAccess::login',
+        'LimitedAccess::verify',
+    ];
+
+    public function __construct(IpAddressChecker $ipAddressChecker, ResponseFactory $responseFactory, Codes $codes)
     {
         $this->ipAddressChecker = $ipAddressChecker;
         $this->responseFactory = $responseFactory;
+        $this->codes = $codes;
     }
 
     /**
@@ -54,7 +69,7 @@ class LimitedAccess
         /** @var Route|null $route */
         $route = $request->route();
 
-        if ($route && 'LimitedAccess::login' !== $route->getName() && !$request->session()->get('limited-access-granted')) {
+        if (!$request->session()->get('limited-access-granted') && $route && !$route->named($this->except)) {
             return $this->responseFactory->view('LimitedAccess::login');
         }
 
@@ -64,7 +79,7 @@ class LimitedAccess
     private function areCodesSet(): bool
     {
         if (config('limited-access.enabled', false)) {
-            $codes = explode(',', config('limited-access.codes', ''));
+            $codes = $this->codes->get();
 
             return \count(array_filter($codes)) > 0;
         }

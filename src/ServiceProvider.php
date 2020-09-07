@@ -15,6 +15,8 @@ class ServiceProvider extends LaravelServiceProvider
             __DIR__ . '/../config/limited-access.php',
             'limited-access'
         );
+
+        $this->app->singleton(Codes::class);
     }
 
     public function boot(Router $router): void
@@ -39,8 +41,8 @@ class ServiceProvider extends LaravelServiceProvider
         ], 'lang');
 
         $this->publishes([
-            __DIR__ . '/../assets' => public_path('vendor/limited-access'),
-        ], 'assets');
+            __DIR__ . '/../resources/assets' => public_path('vendor/limited-access'),
+        ], 'public');
     }
 
     private function registerViews(): void

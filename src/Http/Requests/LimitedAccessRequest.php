@@ -4,6 +4,7 @@ namespace Webparking\LimitedAccess\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Webparking\LimitedAccess\Codes;
 
 class LimitedAccessRequest extends FormRequest
 {
@@ -22,10 +23,13 @@ class LimitedAccessRequest extends FormRequest
      */
     public function rules(): array
     {
+        /** @var Codes $codes */
+        $codes = app(Codes::class);
+
         return [
             'code' => [
                 'required',
-                Rule::in(explode(',', config('limited-access.codes', ''))),
+                Rule::in($codes->get()),
             ],
         ];
     }

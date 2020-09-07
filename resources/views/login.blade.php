@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@lang('LimitedAccess::login.document.title')</title>
     <meta name="robots" content="noindex">
-    <link rel="stylesheet" href="/vendor/limited-access/login.css">
+    <link rel="stylesheet" href="{{ asset('vendor/limited-access/login.css') }}">
 </head>
 <body>
 <main class="text-wrapper">
@@ -18,7 +18,7 @@
         {{ $errors->any() ? trans('LimitedAccess::login.try_again') : trans('LimitedAccess::login.subtitle') }}
     </div>
 
-    <form action="{{ route('LimitedAccess::login') }}" method="post">
+    <form action="{{ route('LimitedAccess::verify') }}" method="post">
         {{ csrf_field() }}
         <input name="code" type="text" class="{{ $errors->any() ? 'error' : null }}">
         <button>@lang('LimitedAccess::login.submit')</button>

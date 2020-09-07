@@ -15,18 +15,18 @@ Add this package to composer.
 composer require webparking/laravel-limited-access
 ```
 
+Publish assets:
+
+```shell script
+php artisan vendor:publish --provider="Webparking\LimitedAccess\ServiceProvider" --tag="public"
+```
+
 ### Optional steps
 
 Publish config:
 
 ```shell script
 php artisan vendor:publish --provider="Webparking\LimitedAccess\ServiceProvider" --tag="config"
-```
-
-Publish assets:
-
-```shell script
-php artisan vendor:publish --provider="Webparking\LimitedAccess\ServiceProvider" --tag="assets"
 ```
 
 Publish translations:

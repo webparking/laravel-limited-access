@@ -14,5 +14,5 @@ Route::name('LimitedAccess::')->middleware([
     Route::post(
         'limited-access-login',
         '\Webparking\LimitedAccess\Http\Controllers\LimitedAccessController@validate'
-    );
+    )->name('verify');
 });
