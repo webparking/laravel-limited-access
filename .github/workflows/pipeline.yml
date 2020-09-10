@@ -11,26 +11,32 @@ on:
 jobs:
   build:
 
+    strategy:
+      matrix:
+        php:
+          - '7.3'
+          - '7.4'
+        laravel:
+          - '7'
+          - '8'
+
+
     runs-on: ubuntu-latest
 
+    name: 'Laravel ${{ matrix.laravel }} on PHP ${{ matrix.php }}'
     steps:
     - uses: actions/checkout@v2
 
-    - name: Validate composer.json and composer.lock
+    - name: Setup PHP ${{ matrix.php }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+
+    - name: Validate composer
       run: composer validate
 
-    - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v2
-      with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-php-
-
-    - name: Install dependencies
-      if: steps.composer-cache.outputs.cache-hit != 'true'
-      run: composer install --prefer-dist --no-progress --no-suggest
+    - name: Install dependencies, lock Laravel version
+      run: composer require laravel/framework:^${{ matrix.laravel }} --prefer-dist --no-progress
 
     - name: Run phpstan
       run: composer phpstan
