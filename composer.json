@@ -1,7 +1,7 @@
 {
     "name": "webparking/laravel-limited-access",
     "description": "Limited access for Laravel",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "license": "MIT",
     "authors": [
         {
@@ -27,7 +27,7 @@
         }
     },
     "require": {
-        "php": "^7.3",
+        "php": "^7.3|^8.0",
         "laravel/framework": "^7|^8"
     },
     "require-dev": {
