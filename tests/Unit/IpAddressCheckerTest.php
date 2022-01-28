@@ -7,14 +7,17 @@ namespace Webparking\LimitedAccess\Tests\Unit;
 use Webparking\LimitedAccess\Ip\IpAddressChecker;
 use Webparking\LimitedAccess\Tests\TestCase;
 
-class IpAddressCheckerTest extends TestCase
+/**
+ * @internal
+ */
+final class IpAddressCheckerTest extends TestCase
 {
     /**
      * @var IpAddressChecker
      */
     private $ipAddressChecker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -26,40 +29,40 @@ class IpAddressCheckerTest extends TestCase
      */
     public function testValidAddressesWithNoBlockOrIgnore(string $ipAddress): void
     {
-        $this->assertFalse($this->ipAddressChecker->isIgnored($ipAddress));
-        $this->assertFalse($this->ipAddressChecker->isBlocked($ipAddress));
+        static::assertFalse($this->ipAddressChecker->isIgnored($ipAddress));
+        static::assertFalse($this->ipAddressChecker->isBlocked($ipAddress));
     }
 
     public function testBlockedAddresses(): void
     {
-        $this->assertTrue($this->ipAddressChecker->isBlocked('192.168.2.1'));
-        $this->assertTrue($this->ipAddressChecker->isBlocked('192.168.2.50'));
-        $this->assertTrue($this->ipAddressChecker->isBlocked('192.168.2.200'));
-        $this->assertTrue($this->ipAddressChecker->isBlocked('2607:f0d0:1002:52::5'));
-        $this->assertTrue($this->ipAddressChecker->isBlocked('2607:f0d0:1002:52::ffff'));
-        $this->assertTrue($this->ipAddressChecker->isBlocked('2607:f0d0:1002:52::c0de'));
+        static::assertTrue($this->ipAddressChecker->isBlocked('192.168.2.1'));
+        static::assertTrue($this->ipAddressChecker->isBlocked('192.168.2.50'));
+        static::assertTrue($this->ipAddressChecker->isBlocked('192.168.2.200'));
+        static::assertTrue($this->ipAddressChecker->isBlocked('2607:f0d0:1002:52::5'));
+        static::assertTrue($this->ipAddressChecker->isBlocked('2607:f0d0:1002:52::ffff'));
+        static::assertTrue($this->ipAddressChecker->isBlocked('2607:f0d0:1002:52::c0de'));
 
-        $this->assertFalse($this->ipAddressChecker->isBlocked('192.168.1.1'));
-        $this->assertFalse($this->ipAddressChecker->isBlocked('127.0.0.1'));
-        $this->assertFalse($this->ipAddressChecker->isBlocked('192.168.3.1'));
-        $this->assertFalse($this->ipAddressChecker->isBlocked('2607:f0d0:1002:51:1::4'));
-        $this->assertFalse($this->ipAddressChecker->isBlocked('2607:f0d0:1002:ff:1'));
+        static::assertFalse($this->ipAddressChecker->isBlocked('192.168.1.1'));
+        static::assertFalse($this->ipAddressChecker->isBlocked('127.0.0.1'));
+        static::assertFalse($this->ipAddressChecker->isBlocked('192.168.3.1'));
+        static::assertFalse($this->ipAddressChecker->isBlocked('2607:f0d0:1002:51:1::4'));
+        static::assertFalse($this->ipAddressChecker->isBlocked('2607:f0d0:1002:ff:1'));
     }
 
     public function testIgnoredAddresses(): void
     {
-        $this->assertTrue($this->ipAddressChecker->isIgnored('192.168.1.1'));
-        $this->assertTrue($this->ipAddressChecker->isIgnored('192.168.1.50'));
-        $this->assertTrue($this->ipAddressChecker->isIgnored('192.168.1.200'));
-        $this->assertTrue($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51::5'));
-        $this->assertTrue($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51::ffff'));
-        $this->assertTrue($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51::c0de'));
+        static::assertTrue($this->ipAddressChecker->isIgnored('192.168.1.1'));
+        static::assertTrue($this->ipAddressChecker->isIgnored('192.168.1.50'));
+        static::assertTrue($this->ipAddressChecker->isIgnored('192.168.1.200'));
+        static::assertTrue($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51::5'));
+        static::assertTrue($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51::ffff'));
+        static::assertTrue($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51::c0de'));
 
-        $this->assertFalse($this->ipAddressChecker->isIgnored('192.168.2.1'));
-        $this->assertFalse($this->ipAddressChecker->isIgnored('127.0.0.1'));
-        $this->assertFalse($this->ipAddressChecker->isIgnored('192.168.3.1'));
-        $this->assertFalse($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51:1::4'));
-        $this->assertFalse($this->ipAddressChecker->isIgnored('2607:f0d0:1002:ff:1'));
+        static::assertFalse($this->ipAddressChecker->isIgnored('192.168.2.1'));
+        static::assertFalse($this->ipAddressChecker->isIgnored('127.0.0.1'));
+        static::assertFalse($this->ipAddressChecker->isIgnored('192.168.3.1'));
+        static::assertFalse($this->ipAddressChecker->isIgnored('2607:f0d0:1002:51:1::4'));
+        static::assertFalse($this->ipAddressChecker->isIgnored('2607:f0d0:1002:ff:1'));
     }
 
     /**

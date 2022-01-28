@@ -1,0 +1,5 @@
+version: '3.8'
+services:
+  workspace:
+    volumes:
+      - ~/.composer:/home/user/.composer

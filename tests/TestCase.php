@@ -14,7 +14,8 @@ use Webparking\LimitedAccess\ServiceProvider;
 abstract class TestCase extends \Orchestra\Testbench\TestCase
 {
     /**
-     * @param  \Illuminate\Foundation\Application $app
+     * @param \Illuminate\Foundation\Application $app
+     *
      * @return string[]
      */
     public function getPackageProviders($app)
@@ -27,7 +28,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
     /**
      * @param \Illuminate\Foundation\Application $app
      */
-    protected function getEnvironmentSetUp($app)
+    protected function getEnvironmentSetUp($app): void
     {
         /** @var Repository $config */
         $config = $app['config'];
@@ -48,9 +49,7 @@ abstract class TestCase extends \Orchestra\Testbench\TestCase
         /** @var Router $router */
         $router = $app['router'];
 
-        $router->get('/secret-stuff', static function (): string {
-            return 'This is very secret!';
-        })->middleware([
+        $router->get('/secret-stuff', static fn (): string => 'This is very secret!')->middleware([
             StartSession::class,
             ShareErrorsFromSession::class,
             LimitedAccess::class,

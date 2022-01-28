@@ -46,7 +46,7 @@ class LimitedAccess
     }
 
     /**
-     * @return Response|mixed
+     * @return mixed|Response
      */
     public function handle(Request $request, Closure $next)
     {
@@ -66,7 +66,7 @@ class LimitedAccess
             return $next($request);
         }
 
-        /** @var Route|null $route */
+        /** @var null|Route $route */
         $route = $request->route();
 
         if (!$request->session()->get('limited-access-granted') && $route && !$route->named($this->except)) {

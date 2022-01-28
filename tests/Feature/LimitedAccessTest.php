@@ -6,7 +6,10 @@ namespace Webparking\LimitedAccess\Tests\Feature;
 
 use Webparking\LimitedAccess\Tests\TestCase;
 
-class LimitedAccessTest extends TestCase
+/**
+ * @internal
+ */
+final class LimitedAccessTest extends TestCase
 {
     public function testEnabledNoCodesSet(): void
     {
@@ -15,7 +18,8 @@ class LimitedAccessTest extends TestCase
 
         $this
             ->get('/secret-stuff')
-            ->assertStatus(500);
+            ->assertStatus(500)
+        ;
 
         config()->set('limited-access.codes', $originalCodes);
     }
@@ -30,7 +34,8 @@ class LimitedAccessTest extends TestCase
         $this->get('/secret-stuff')
             ->assertStatus(200)
             ->assertSessionMissing('limited-access-granted')
-            ->assertSee('Limited access');
+            ->assertSee('Limited access')
+        ;
     }
 
     /**
@@ -44,7 +49,8 @@ class LimitedAccessTest extends TestCase
             ->post('/limited-access-login', [
                 'code' => 'letyoudown',
             ])
-            ->assertSessionMissing('limited-access-granted');
+            ->assertSessionMissing('limited-access-granted')
+        ;
     }
 
     /**
@@ -61,7 +67,8 @@ class LimitedAccessTest extends TestCase
                 'code' => 'never',
             ])
             ->assertSessionHas('limited-access-granted')
-            ->assertRedirect('/secret-stuff');
+            ->assertRedirect('/secret-stuff')
+        ;
     }
 
     /**
@@ -76,7 +83,8 @@ class LimitedAccessTest extends TestCase
                 'code' => 'never',
             ])
             ->assertSessionMissing('limited-access-granted')
-            ->assertSee('This is very secret!');
+            ->assertSee('This is very secret!')
+        ;
     }
 
     /**
@@ -90,7 +98,8 @@ class LimitedAccessTest extends TestCase
             ->post('/limited-access-login', [
                 'code' => 'gonna',
             ])
-            ->assertSessionMissing('limited-access-granted');
+            ->assertSessionMissing('limited-access-granted')
+        ;
     }
 
     public function testBlockedOverridesIgnore(): void
@@ -107,7 +116,8 @@ class LimitedAccessTest extends TestCase
             ->post('/limited-access-login', [
                 'code' => 'give',
             ])
-            ->assertSessionMissing('limited-access-granted');
+            ->assertSessionMissing('limited-access-granted')
+        ;
     }
 
     /**

@@ -1,0 +1,27 @@
+<?php
+
+use PhpCsFixer\Config;
+use PhpCsFixer\Finder;
+
+$finder = new Finder();
+$finder->in([
+    __DIR__.'/config',
+    __DIR__.'/routes',
+    __DIR__.'/src',
+    __DIR__.'/tests',
+]);
+
+$config = new Config();
+$config->setRules([
+    // Rulesets
+    '@PhpCsFixer' => true,
+    '@PhpCsFixer:risky' => true,
+    '@PHP80Migration:risky' => true,
+    '@PHP81Migration' => true,
+    // Custom rules
+    'php_unit_test_class_requires_covers' => false, // Coverage not yet complete. Will be fixed in later version
+]);
+$config->setRiskyAllowed(true);
+$config->setFinder($finder);
+
+return $config;

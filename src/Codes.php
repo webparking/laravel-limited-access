@@ -25,8 +25,6 @@ final class Codes
     {
         $codes = $this->config->get('limited-access.codes');
 
-        return array_map(static function (string $code): string {
-            return trim($code);
-        }, explode(',', $codes));
+        return array_map(static fn (string $code): string => trim($code), explode(',', $codes));
     }
 }
