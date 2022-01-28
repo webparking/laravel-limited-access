@@ -17,12 +17,8 @@ jobs:
         php:
           - '7.4'
           - '8.0'
-          - '8.1'
-        laravel:
-          - '7'
-          - '8'
 
-    name: 'Laravel ${{ matrix.laravel }} on PHP ${{ matrix.php }}'
+    name: 'Laravel 7 on PHP ${{ matrix.php }}'
 
     steps:
       - uses: actions/checkout@v2
@@ -45,7 +41,7 @@ jobs:
             ${{ runner.os }}-php-
 
       - name: Install dependencies, lock Laravel version
-        run: composer require laravel/framework:^${{ matrix.laravel }} --prefer-dist --no-progress
+        run: composer require laravel/framework:^7 --prefer-dist --no-progress
 
       - name: Run PHPStan analysis
         run: vendor/bin/phpstan analyse src config --level 5

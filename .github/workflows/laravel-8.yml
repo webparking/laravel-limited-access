@@ -1,0 +1,57 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php:
+          - '7.4'
+          - '8.0'
+          - '8.1'
+
+    name: 'Laravel 8 on PHP ${{ matrix.php }}'
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+
+      - name: Validate composer
+        run: composer validate --strict
+
+      - name: Cache Composer packages
+        id: composer-cache
+        uses: actions/cache@v2
+        with:
+          path: vendor
+          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-php-
+
+      - name: Install dependencies, lock Laravel version
+        run: composer require laravel/framework:^8 --prefer-dist --no-progress
+
+      - name: Run PHPStan analysis
+        run: vendor/bin/phpstan analyse src config --level 5
+
+      - name: Prepare PHP-CS-Fixer configuration file
+        run: cp .php-cs-fixer.php.dist .php-cs-fixer.php
+
+      - name: Run PHP-CS-Fixer code-style analysis
+        run: vendor/bin/php-cs-fixer fix --dry-run --config=.php-cs-fixer.php --stop-on-violation
+
+      - name: Run PHPUnit tests
+        run: vendor/bin/phpunit
