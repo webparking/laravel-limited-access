@@ -27,19 +27,19 @@
         }
     },
     "require": {
-        "php": "^7.3",
+        "php": "^7.4|^8.0",
         "laravel/framework": "^7|^8"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^2.16",
-        "phpunit/phpunit": "^9.2",
+        "friendsofphp/php-cs-fixer": "^3",
+        "phpunit/phpunit": "^9.5",
         "orchestra/testbench": "^5|^6",
         "roave/security-advisories": "dev-master",
-        "nunomaduro/larastan": "^0.6.3"
+        "nunomaduro/larastan": "^1"
     },
     "scripts": {
-        "phpstan": "vendor/bin/phpstan analyze",
-        "php-cs-fixer": "vendor/bin/php-cs-fixer fix --config=.php_cs .",
+        "phpstan": "vendor/bin/phpstan analyse config routes src --memory-limit=-1 --level 5",
+        "php-cs-fixer": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php",
         "phpunit": "vendor/bin/phpunit",
         "test": [
             "composer phpstan",
